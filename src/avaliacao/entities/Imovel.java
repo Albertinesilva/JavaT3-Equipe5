@@ -1,6 +1,7 @@
 package avaliacao.entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Imovel {
   
@@ -93,8 +94,9 @@ public class Imovel {
 
   @Override
   public String toString() {
-    return "\n\tMatricula: " + matricula + "\n\tEndereco=" + endereco + "\n\tUltimaLeitura: " + UltimaLeitura
-        + "\n\tPenultimaLeitura: " + penultimaLeitura;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return "\n\tMatricula: " + matricula + "\n\tEndereco: " + endereco + "\n\tPenultimaLeitura: " 
+            + penultimaLeitura.format(formatter) + "\n\tUltimaLeitura: " + UltimaLeitura.format(formatter);
   }
   
   

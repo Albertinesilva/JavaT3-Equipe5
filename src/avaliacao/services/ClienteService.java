@@ -21,7 +21,6 @@ public class ClienteService implements ClienteRepository {
 
   public static void cadastrar() 
   {
-
     Utils.limparTela();
     System.out.println("\n\t===== CADASTRO DE CLIENTE =====");
 

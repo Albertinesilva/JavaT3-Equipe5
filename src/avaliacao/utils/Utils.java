@@ -220,13 +220,13 @@ public class Utils {
           ImovelService.listar();
           break;
         case 3:
-          // editar();
+          ImovelService.editar();
           break;
         case 4:
-          // excluir();
+          ImovelService.excluir();
           break;
         case 5:
-          // pesquisar();
+          ImovelService.pesquisar();
           break;
         case 6:
           System.out.println("\n\tRetornando ao menu principal...");
