@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import avaliacao.services.ClienteService;
+import avaliacao.services.ImovelService;
 
 public class Utils {
 
@@ -27,7 +28,7 @@ public class Utils {
           menuCliente();
           break;
         case 2:
-          // menuImoveis();
+          menuImoveis();
           break;
         case 3:
           // menuContas();
@@ -148,6 +149,84 @@ public class Utils {
           break;
         case 5:
           ClienteService.pesquisar();
+          break;
+        case 6:
+          System.out.println("\n\tRetornando ao menu principal...");
+          pausar(scan);
+          MainEnergiaCoelho();
+          break;
+        case 0:
+          System.err.println("\n\tObrigado por utilizar o Energia Coelho, Saindo!...");
+          System.exit(0);
+          break;
+        default:
+          System.out.println("\n\tOpção inválida. Tente novamente.");
+      }
+    } while (opcao != 0);
+  }
+
+  public static int dispMenuImoveis() {
+
+    int opcao = -1;
+
+    do {
+      limparTela();
+      imprimirFormatado(LocalDateTime.now());
+      calcularDiasRestantes(LocalDateTime.now());
+      System.out.print("\n\t===== GESTÃO IMÓVEIS =====");
+      System.out.print("\n\t[1] - CADASTRAR");
+      System.out.print("\n\t[2] - LISTAR");
+      System.out.print("\n\t[3] - EDITAR");
+      System.out.print("\n\t[4] - EXCLUIR");
+      System.out.print("\n\t[5] - PESQUISAR");
+      System.out.print("\n\t[6] - MENU PRINCIPAL");
+      System.out.print("\n\t[0] - SAIR");
+      System.out.print("\n\tENTRADA -> ");
+
+      try {
+        opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao < 0 || opcao > 6) {
+          System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 6.");
+          pausar(scan);
+          limparTela();
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("\n\tOps, entrada inválida. Digite um número inteiro.");
+        scan.next(); // Limpa o buffer do scanner
+        pausar(scan);
+        limparTela();
+      }
+
+    } while (opcao < 0 || opcao > 6);
+
+    return opcao;
+  }
+
+  public static void menuImoveis() {
+
+    int opcao = -1;
+
+    do {
+
+      opcao = dispMenuImoveis();
+
+      switch (opcao) {
+        case 1:
+          ImovelService.cadastrar();
+          break;
+        case 2:
+          ImovelService.listar();
+          break;
+        case 3:
+          // editar();
+          break;
+        case 4:
+          // excluir();
+          break;
+        case 5:
+          // pesquisar();
           break;
         case 6:
           System.out.println("\n\tRetornando ao menu principal...");

@@ -93,8 +93,8 @@ public class Imovel {
 
   @Override
   public String toString() {
-    return "Imovel [matricula=" + matricula + ", endereco=" + endereco + ", UltimaLeitura=" + UltimaLeitura
-        + ", penultimaLeitura=" + penultimaLeitura + "]";
+    return "\n\tMatricula: " + matricula + "\n\tEndereco=" + endereco + "\n\tUltimaLeitura: " + UltimaLeitura
+        + "\n\tPenultimaLeitura: " + penultimaLeitura;
   }
   
   
