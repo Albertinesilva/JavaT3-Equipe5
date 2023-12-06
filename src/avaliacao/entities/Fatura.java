@@ -1,113 +1,108 @@
 package avaliacao.entities;
-
 import java.time.LocalDate;
+import java.util.*;
+
+import java.text.DecimalFormat;
+import avaliacao.utils.*;
+
 
 public class Fatura {
-  
-  private LocalDate dataVencimento;
-  private LocalDate ultimaLeitura;
-  private LocalDate penultimaLeitura;
-  private double valor;
-  private boolean quitado;
+	private String matriculaImovel;
+    private int ultimaLeitura;
+    private int penultimaLeitura;
+    private double valorTotal;
+    private LocalDate dataEmissao;
+    private boolean quitado;
+    private ArrayList<Pagamento> pagamentos;
+    private Reembolso reembolso;
 
-  public Fatura(LocalDate dataVencimento, LocalDate ultimaLeitura, LocalDate penultimaLeitura, double valor) {
-    this.dataVencimento = dataVencimento;
-    this.ultimaLeitura = ultimaLeitura;
-    this.penultimaLeitura = penultimaLeitura;
-    this.valor = valor;
-    this.quitado = false;
-  }
+    public Fatura(String matriculaImovel, int ultimaLeitura, int penultimaLeitura) {
+        this.matriculaImovel = matriculaImovel;
+        this.ultimaLeitura = ultimaLeitura;
+        this.penultimaLeitura = penultimaLeitura;
+        this.dataEmissao = LocalDate.now();
+        this.quitado = false;
+        this.pagamentos = new ArrayList<>();
+        calcularValorFatura();
+    }
 
-  public LocalDate getDataVencimento() {
-    return this.dataVencimento;
-  }
+    public String getMatriculaImovel() {
+        return matriculaImovel;
+    }
 
-  public LocalDate getUltimaLeitura() {
-    return this.ultimaLeitura;
-  }
+    public int getUltimaLeitura() {
+        return ultimaLeitura;
+    }
 
-  public LocalDate getPenultimaLeitura() {
-    return this.penultimaLeitura;
-  }
+    public int getPenultimaLeitura() {
+        return penultimaLeitura;
+    }
 
-  public double getValor() {
-    return this.valor;
-  }
+    public double getValorTotal() {
+        return valorTotal;
+    }
 
-  public boolean isQuitado() {
-    return this.quitado;
-  }
+    public LocalDate getDataEmissao() {
+        return dataEmissao;
+    }
+    
+    public ArrayList<Pagamento> getPagamentos(){
+    	return pagamentos;
+    }
+    
+    public Reembolso getReembolso() {
+    	return reembolso;
+    }
+    
+    public void novoPagamento() {
+    	if(quitado) {
+    		Utils.cxMsg("A fatura já está quitadaa!");
+    		return;
+    	}
+    	
+    	float totalPago = 0;
+    	Pagamento novo = Pagamento.obterDadosPagamento();
+    	if(novo == null) {
+    		Utils.cxMsg("Pagamento não realizado");
+    		return;
+    	}
+    	this.pagamentos.add(novo);
+    	
+    	for (Pagamento p : pagamentos)
+			totalPago += p.valor;
+    	
+    	if(totalPago < this.valorTotal) {
+    		DecimalFormat df = new DecimalFormat("#.##");
+            String msg = String.format("A fatura foi parcialmente paga, restando R$%s a pagar!", df.format(this.valorTotal - totalPago));
+            Utils.cxMsg(msg);
+            return;
+    	}
+    	
+		this.quitado = true;
+		Utils.cxMsg("A fatura foi paga!");
+		if(totalPago > this.valorTotal) {
+			this.reembolso = new Reembolso(totalPago - this.valorTotal);
+			Utils.cxMsg(this.reembolso.toString());
+		}
+    }
+    
+    public boolean isQuitado() {
+        return quitado;
+    }
 
-  public void setDataVencimento(LocalDate dataVencimento) {
-    this.dataVencimento = dataVencimento;
-  }
+    public void setQuitado(boolean quitado) {
+        this.quitado = quitado;
+    }
 
-  public void setUltimaLeitura(LocalDate ultimaLeitura) {
-    this.ultimaLeitura = ultimaLeitura;
-  }
+    public void calcularValorFatura() {
+        double custoPorKWh = 10.0;
+        this.valorTotal = (ultimaLeitura - penultimaLeitura) * custoPorKWh;
+    }
 
-  public void setPenultimaLeitura(LocalDate penultimaLeitura) {
-    this.penultimaLeitura = penultimaLeitura;
-  }
-
-  public void setValor(double valor) {
-    this.valor = valor;
-  }
-
-  public void setQuitado(boolean quitado) {
-    this.quitado = quitado;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((dataVencimento == null) ? 0 : dataVencimento.hashCode());
-    result = prime * result + ((ultimaLeitura == null) ? 0 : ultimaLeitura.hashCode());
-    result = prime * result + ((penultimaLeitura == null) ? 0 : penultimaLeitura.hashCode());
-    long temp;
-    temp = Double.doubleToLongBits(valor);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    result = prime * result + (quitado ? 1231 : 1237);
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    Fatura other = (Fatura) obj;
-    if (dataVencimento == null) {
-      if (other.dataVencimento != null)
-        return false;
-    } else if (!dataVencimento.equals(other.dataVencimento))
-      return false;
-    if (ultimaLeitura == null) {
-      if (other.ultimaLeitura != null)
-        return false;
-    } else if (!ultimaLeitura.equals(other.ultimaLeitura))
-      return false;
-    if (penultimaLeitura == null) {
-      if (other.penultimaLeitura != null)
-        return false;
-    } else if (!penultimaLeitura.equals(other.penultimaLeitura))
-      return false;
-    if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
-      return false;
-    if (quitado != other.quitado)
-      return false;
-    return true;
-  }
-
-  @Override
-  public String toString() {
-    return "Fatura [dataVencimento=" + dataVencimento + ", ultimaLeitura=" + ultimaLeitura + ", penultimaLeitura="
-        + penultimaLeitura + ", valor=" + valor + ", quitado=" + quitado + "]";
-  }
- 
-  
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return String.format("Nº de Matrícula: %s, Consumo: %s, Valor Total: R$%s, Data de Emissão: %s, Quitado: %s]",
+                matriculaImovel, ultimaLeitura - penultimaLeitura, df.format(valorTotal), dataEmissao, quitado);
+    }
 }

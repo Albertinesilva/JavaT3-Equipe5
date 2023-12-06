@@ -1,66 +1,56 @@
 package avaliacao.entities;
-
 import java.time.LocalDate;
+import java.util.*;
+import java.text.DecimalFormat;
+
 
 public class Pagamento {
-  
-  private LocalDate data;
-  private double valor;
+    protected double valor;
+    protected LocalDate data;
 
-  public Pagamento(LocalDate data, double valor) {
-    this.data = data;
-    this.valor = valor;
-  }
+    public Pagamento(double valor) {
+        this.valor = valor;
+        this.data = LocalDate.now();
+    }
 
-  public LocalDate getData() {
-    return this.data;
-  }
+    public double getValor() {
+        return valor;
+    }
 
-  public double getValor() {
-    return this.valor;
-  }
+    public LocalDate getData() {
+        return data;
+    }
 
-  public void setData(LocalDate data) {
-    this.data = data;
-  }
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
 
-  public void setValor(double valor) {
-    this.valor = valor;
-  }
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+    
+    public static Pagamento obterDadosPagamento() {
+    	
+        Pagamento pagamento;
+		try {
+			@SuppressWarnings("resource")
+			Scanner scanner = new Scanner(System.in);
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((data == null) ? 0 : data.hashCode());
-    long temp;
-    temp = Double.doubleToLongBits(valor);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    return result;
-  }
+			System.out.print("Informe o valor do pagamento: ");
+			double valorPagamento = scanner.nextDouble();
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    Pagamento other = (Pagamento) obj;
-    if (data == null) {
-      if (other.data != null)
-        return false;
-    } else if (!data.equals(other.data))
-      return false;
-    if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
-      return false;
-    return true;
-  }
+			pagamento = new Pagamento(valorPagamento);
+			return pagamento;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
 
-  @Override
-  public String toString() {
-    return "Pagamento [data=" + data + ", valor=" + valor + "]";
-  }
-
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return String.format("Pagamento no valor de R$%s realizado na data %s!", df.format(valor), data);
+    }
 }

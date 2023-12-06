@@ -277,4 +277,11 @@ public class Utils {
     System.out.print("\n\tPressione ENTER para continuar...");
     scan.nextLine();
   }
+
+  public static void cxMsg(String mensagem) {
+		limparTela();
+    System.out.println(mensagem);
+    Scanner scanner = new Scanner(System.in);
+    pausar(scanner);
+  }
 }
