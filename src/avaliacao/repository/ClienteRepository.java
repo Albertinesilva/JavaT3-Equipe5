@@ -1,19 +1,18 @@
 package avaliacao.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import avaliacao.entities.Cliente;
 
 public interface ClienteRepository{
   
   public void adcionar(Cliente cliente);
 
-  public void cadastrar(Cliente cliente);
+  public static void cadastrar(){}
 
-  public void listar();
+  public static void listar(){}
 
-  public void excluir();
+  public static void editar(){}
 
-  public void buscar();
+  public static void excluir(){}
+
+  public static void pesquisar(){}
 }
