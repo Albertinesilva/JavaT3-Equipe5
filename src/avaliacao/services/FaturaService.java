@@ -8,14 +8,12 @@ public class FaturaService {
     private static List<Fatura> listaFatura;
 
     public static void registrarConsumo() {
+		Imovel imovel = ImovelService.buscarImovel();
 
-    	// Imovel imovel = função que encontra o imóvel pela matrícula
-    	Imovel imovel = new Imovel(null, null, 0);
-    	
-//    	if(imovel == null) {
-//    		Utils.cxMsg("Imóvel não encontrado!");
-//    		return;
-//    	}
+		if(imovel == null) {
+			Utils.cxMsg("Imóvel não encontrado!");
+			return;
+		}
 
     	int valorLido;
 		try {
