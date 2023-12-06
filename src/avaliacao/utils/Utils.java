@@ -226,8 +226,7 @@ public class Utils {
           ImovelService.excluir();
           break;
         case 5:
-          // ImovelService.pesquisar();
-          ImovelService.buscaImóvel();
+          ImovelService.pesquisar();
           break;
         case 6:
           System.out.println("\n\tRetornando ao menu principal...");
