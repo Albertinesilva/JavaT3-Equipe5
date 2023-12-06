@@ -16,7 +16,7 @@ public interface ImovelRepository {
 
   public static void pesquisar(){}
 
-  public static Imovel buscaImóvel(){
+  public static Imovel buscaImovel(){
     return null;
   }
 }

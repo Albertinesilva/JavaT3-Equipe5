@@ -244,7 +244,7 @@ public class ImovelService implements ImovelRepository {
     return valor;
   }
 
-  public static Imovel buscaImóvel() {
+  public static Imovel buscaImovel() {
 
     Utils.limparTela();
     System.out.print("\n\t===== PESQUISA DE IMÓVEL POR MATRÍCULA =====");
