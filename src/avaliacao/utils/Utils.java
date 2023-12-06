@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import avaliacao.service.ClienteService;
+import avaliacao.services.ClienteService;
 
 public class Utils {
 

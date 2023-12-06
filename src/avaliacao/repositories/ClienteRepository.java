@@ -1,4 +1,4 @@
-package avaliacao.repository;
+package avaliacao.repositories;
 
 import avaliacao.entities.Cliente;
 

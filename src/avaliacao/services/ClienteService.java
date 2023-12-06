@@ -1,4 +1,4 @@
-package avaliacao.service;
+package avaliacao.services;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import avaliacao.entities.Cliente;
-import avaliacao.repository.ClienteRepository;
+import avaliacao.repositories.ClienteRepository;
 import avaliacao.utils.Utils;
 
 public class ClienteService implements ClienteRepository {
