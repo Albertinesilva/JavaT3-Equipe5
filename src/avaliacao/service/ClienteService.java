@@ -14,11 +14,13 @@ public class ClienteService implements ClienteRepository {
   public static List<Cliente> clientes = new ArrayList<>();
 
   @Override
-  public void adcionar(Cliente cliente) {
+  public void adcionar(Cliente cliente) 
+  {
     clientes.add(cliente);
   }
 
-  public static void cadastrar() {
+  public static void cadastrar() 
+  {
 
     Utils.limparTela();
     System.out.println("\n\t===== CADASTRO DE CLIENTE =====");
@@ -36,7 +38,8 @@ public class ClienteService implements ClienteRepository {
     Utils.pausar(Utils.scan);
   }
 
-  public static void listar() {
+  public static void listar() 
+  {
     Utils.limparTela();
     System.out.print("\n\t===== LISTAGEM DE CLIENTES =====");
 
@@ -52,7 +55,8 @@ public class ClienteService implements ClienteRepository {
     Utils.pausar(Utils.scan);
   }
 
-  public static void editar() {
+  public static void editar() 
+  {
 
     Utils.limparTela();
     System.out.println("\n\t===== EDIÇÃO DE CLIENTE =====");
@@ -114,7 +118,8 @@ public class ClienteService implements ClienteRepository {
     }
   }
 
-  public static void excluir() {
+  public static void excluir() 
+  {
 
     Utils.limparTela();
     System.out.println("\n\t===== EXCLUSÃO DE CLIENTE =====");
@@ -165,7 +170,8 @@ public class ClienteService implements ClienteRepository {
     }
   }
 
-  public static void pesquisar() {
+  public static void pesquisar() 
+  {
     Utils.limparTela();
     System.out.println("\n\t===== PESQUISA DE CLIENTE =====");
 

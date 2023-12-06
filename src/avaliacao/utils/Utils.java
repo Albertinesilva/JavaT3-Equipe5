@@ -7,8 +7,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import avaliacao.entities.Cliente;
-import avaliacao.repository.ClienteRepository;
 import avaliacao.service.ClienteService;
 
 public class Utils {
