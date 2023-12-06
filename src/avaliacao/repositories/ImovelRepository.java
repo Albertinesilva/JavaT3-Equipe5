@@ -1,7 +1,5 @@
 package avaliacao.repositories;
 
-import java.time.LocalDate;
-
 import avaliacao.entities.Imovel;
 
 public interface ImovelRepository {
@@ -18,7 +16,7 @@ public interface ImovelRepository {
 
   public static void pesquisar(){}
 
-  private static LocalDate obterDataValida(String prompt){
+  public static Imovel buscaImóvel(){
     return null;
   }
 }

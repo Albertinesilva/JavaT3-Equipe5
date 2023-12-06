@@ -1,16 +1,13 @@
 package avaliacao.entities;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Imovel {
-  
+
   private String matricula;
   private String endereco;
-  private LocalDate UltimaLeitura;
-  private LocalDate penultimaLeitura;
+  private int UltimaLeitura;
+  private int penultimaLeitura;
 
-  public Imovel(String matricula, String endereco, LocalDate ultimaLeitura, LocalDate penultimaLeitura) {
+  public Imovel(String matricula, String endereco, int ultimaLeitura, int penultimaLeitura) {
     this.matricula = matricula;
     this.endereco = endereco;
     UltimaLeitura = ultimaLeitura;
@@ -25,11 +22,11 @@ public class Imovel {
     return this.endereco;
   }
 
-  public LocalDate getUltimaLeitura() {
+  public int getUltimaLeitura() {
     return this.UltimaLeitura;
   }
 
-  public LocalDate getPenultimaLeitura() {
+  public int getPenultimaLeitura() {
     return this.penultimaLeitura;
   }
 
@@ -41,11 +38,11 @@ public class Imovel {
     this.endereco = endereco;
   }
 
-  public void setUltimaLeitura(LocalDate ultimaLeitura) {
+  public void setUltimaLeitura(int ultimaLeitura) {
     UltimaLeitura = ultimaLeitura;
   }
 
-  public void setPenultimaLeitura(LocalDate penultimaLeitura) {
+  public void setPenultimaLeitura(int penultimaLeitura) {
     this.penultimaLeitura = penultimaLeitura;
   }
 
@@ -55,8 +52,8 @@ public class Imovel {
     int result = 1;
     result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
     result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
-    result = prime * result + ((UltimaLeitura == null) ? 0 : UltimaLeitura.hashCode());
-    result = prime * result + ((penultimaLeitura == null) ? 0 : penultimaLeitura.hashCode());
+    result = prime * result + UltimaLeitura;
+    result = prime * result + penultimaLeitura;
     return result;
   }
 
@@ -79,25 +76,17 @@ public class Imovel {
         return false;
     } else if (!endereco.equals(other.endereco))
       return false;
-    if (UltimaLeitura == null) {
-      if (other.UltimaLeitura != null)
-        return false;
-    } else if (!UltimaLeitura.equals(other.UltimaLeitura))
+    if (UltimaLeitura != other.UltimaLeitura)
       return false;
-    if (penultimaLeitura == null) {
-      if (other.penultimaLeitura != null)
-        return false;
-    } else if (!penultimaLeitura.equals(other.penultimaLeitura))
+    if (penultimaLeitura != other.penultimaLeitura)
       return false;
     return true;
   }
 
   @Override
   public String toString() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    return "\n\tMatricula: " + matricula + "\n\tEndereco: " + endereco + "\n\tPenultimaLeitura: " 
-            + penultimaLeitura.format(formatter) + "\n\tUltimaLeitura: " + UltimaLeitura.format(formatter);
+
+    return "\n\tMatricula: " + matricula + "\n\tEndereco: " + endereco + "\n\tPenultimaLeitura: "
+        + penultimaLeitura + "\n\tUltimaLeitura: " + UltimaLeitura;
   }
-  
-  
 }
