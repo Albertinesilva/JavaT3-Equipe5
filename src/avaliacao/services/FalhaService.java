@@ -1,6 +1,7 @@
 package avaliacao.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +20,9 @@ public class FalhaService implements FalhaRepository {
         Utils.limparTela();
         System.out.println("\n\t===== CADASTRO DE FALHA DE DISTRIBUIÇÃO=====");
 
-
         System.out.println("\n\tA falha foi reportada por algum cliente? (S/N)");
         String resposta = Utils.scan.nextLine();
-         String matriculaImovel = null;
+        String matriculaImovel = null;
         if (resposta.equalsIgnoreCase("S")) {
             System.out.print("\n\tDigite a matrícula do imóvel: ");
             matriculaImovel = Utils.scan.nextLine();
@@ -33,20 +33,18 @@ public class FalhaService implements FalhaRepository {
                 Utils.cxMsg("Imóvel não encontrado!");
                 return;
             }
-        } else {
-            Utils.cxMsg("Opção inválida!");
-            return;
-        }
+        } 
         
         System.out.print("\n\tDigite a descrição da falha: ");
         String descricao = Utils.scan.nextLine();
 
         System.out.print("\n\tDigite a previsão de conclusão: ");
-        LocalDate previsaoConclusao = LocalDate.parse(Utils.scan.nextLine());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate previsaoConclusao = LocalDate.parse(Utils.scan.nextLine(), formatter);
 
         System.out.print("\n\tDigite a data de início: ");
-        LocalDate dataInicio = LocalDate.parse(Utils.scan.nextLine());
-
+        LocalDate dataInicio = LocalDate.parse(Utils.scan.nextLine(), formatter);
+        
         FalhaDistribuicao falhaDist = new FalhaDistribuicao(matriculaImovel, descricao, previsaoConclusao, dataInicio, null);
     
         falhasDist.add(falhaDist);
@@ -69,19 +67,17 @@ public class FalhaService implements FalhaRepository {
                 Utils.cxMsg("Imóvel não encontrado!");
                 return;
             }
-        } else {
-            Utils.cxMsg("Opção inválida!");
-            return;
-        }
+        } 
 
         System.out.print("\n\tDigite a descrição da falha: ");
         String descricao = Utils.scan.nextLine();
 
         System.out.print("\n\tDigite a previsão de conclusão: ");
-        LocalDate previsaoConclusao = LocalDate.parse(Utils.scan.nextLine());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate previsaoConclusao = LocalDate.parse(Utils.scan.nextLine(), formatter);
 
         System.out.print("\n\tDigite a data de início: ");
-        LocalDate dataInicio = LocalDate.parse(Utils.scan.nextLine());
+        LocalDate dataInicio = LocalDate.parse(Utils.scan.nextLine(), formatter);
 
         FalhaGeracao falhaGer = new FalhaGeracao(matriculaImovel, descricao, previsaoConclusao, dataInicio, null);
 

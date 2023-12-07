@@ -62,7 +62,7 @@ public class Utils {
       System.out.print("\n\t[2] - GESTÃO IMÓVEIS");
       System.out.print("\n\t[3] - GESTÃO CONTAS");
       System.out.print("\n\t[4] - GESTÃO PAGAMENTOS");
-      System.out.print("\n\t[5] - GESTÃO RELATÓRIOS");
+      System.out.print("\n\t[5] - GESTÃO FALHAS");
       System.out.print("\n\t[0] - SAIR");
       System.out.print("\n\tENTRADA -> ");
 
