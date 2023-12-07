@@ -37,7 +37,7 @@ public class Utils {
           menuPagamentos();
           break;
         case 5:
-          // menuRelatorios();
+          menuFalhas();
           break;
         case 0:
           System.err.println("\n\tObrigado por utilizar a nossa Energia Coelho, Saindo!...");
@@ -397,6 +397,125 @@ public class Utils {
     } while (opcao != 0);
   }
 
+  public static int dispMenuFalhas(){
+    int opcao = -1;
+
+    do {
+      limparTela();
+      imprimirFormatado(LocalDateTime.now());
+      calcularDiasRestantes(LocalDateTime.now());
+      System.out.print("\n\t===== GESTÃO FALHAS =====");
+      System.out.print("\n\t[1] - CADASTRAR");
+      System.out.print("\n\t[2] - GESTÃO REPAROS");
+      System.out.print("\n\t[3] - MENU PRINCIPAL");
+      System.out.print("\n\t[0] - SAIR");
+      System.out.print("\n\tENTRADA -> ");
+
+      try {
+        opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao < 0 || opcao > 3) {
+          System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 3.");
+          pausar(scan);
+          limparTela();
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("\n\tOps, entrada inválida. Digite um número inteiro.");
+        scan.next(); // Limpa o buffer do scanner
+        pausar(scan);
+        limparTela();
+      }
+
+    } while (opcao < 0 || opcao > 3);
+
+    return opcao;
+  }
+
+
+  public static int dispMenuTipoFalhas(){
+    int opcao = -1;
+
+    do {
+      limparTela();
+      imprimirFormatado(LocalDateTime.now());
+      calcularDiasRestantes(LocalDateTime.now());
+      System.out.print("\n\t===== GESTÃO FALHAS =====");
+      System.out.print("\n\t[1] - CADASTRAR FALHA DE DISTRIBUIÇÃO");
+      System.out.print("\n\t[2] - CADASTRAR FALHA DE GERAÇÃO");
+      System.out.print("\n\t[3] - MENU PRINCIPAL");
+      System.out.print("\n\t[0] - SAIR");
+      System.out.print("\n\tENTRADA -> ");
+
+      try {
+        opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao < 0 || opcao > 3) {
+          System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 3.");
+          pausar(scan);
+          limparTela();
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("\n\tOps, entrada inválida. Digite um número inteiro.");
+        scan.next(); // Limpa o buffer do scanner
+        pausar(scan);
+        limparTela();
+      }
+
+    } while (opcao < 0 || opcao > 3);
+
+    return opcao;
+  }
+  
+
+  public static void menuTipoFalhas(){
+    int opcao = -1;
+    do {
+      opcao = dispMenuTipoFalhas();
+      switch (opcao) {
+        case 1:
+          FalhaService.cadastrarFalhaDistribuicao();
+          break;
+        case 2:
+          FalhaService.cadastrarFalhaGeracao();
+          break;
+        case 3:
+          System.out.println("\n\tRetornando ao menu principal...");
+          pausar(scan);
+          MainEnergiaCoelho();
+          break;
+        case 0:
+          System.err.println("\n\tObrigado por utilizar o Energia Coelho, Saindo!...");
+          System.exit(0);
+          break;
+        default:
+          System.out.println("\n\tOpção inválida. Tente novamente.");
+      }
+    } while (opcao != 0);
+
+  }
+
+
+  public static void menuFalhas(){
+    int opcao = -1;
+    do {
+      opcao = dispMenuFalhas();
+      switch (opcao) {
+        case 1:
+            menuTipoFalhas();
+          break;
+        case 2:
+          // menuReparos();
+        break;
+      
+        default:
+          break;
+      }
+      
+    } while (opcao != 0);
+    
+  }
 
   public static void imprimirFormatado(LocalDateTime dataHora) {
     System.out.println("\n\tHoje é " + dataHora.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm:ss")));

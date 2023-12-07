@@ -4,16 +4,22 @@ import java.time.LocalDate;
 
 public class Falha {
 
+  private String matriculaImovel;
   private String descricao;
   private LocalDate previsaoConclusao;
   private LocalDate dataInicio;
   private LocalDate dataFim;
 
-  public Falha(String descricao, LocalDate previsaoConclusao, LocalDate dataInicio, LocalDate dataFim) {
+  public Falha(String matriculaImovel, String descricao, LocalDate previsaoConclusao, LocalDate dataInicio, LocalDate dataFim) {
+    this.matriculaImovel = matriculaImovel;
     this.descricao = descricao;
     this.previsaoConclusao = previsaoConclusao;
     this.dataInicio = dataInicio;
     this.dataFim = dataFim;
+  }
+
+  public String getMatriculaImovel() {
+    return this.matriculaImovel;
   }
 
   public String getDescricao() {
@@ -30,6 +36,10 @@ public class Falha {
 
   public LocalDate getDataFim() {
     return this.dataFim;
+  }
+
+  public void setMatriculaImovel(String matriculaImovel) {
+    this.matriculaImovel = matriculaImovel;
   }
 
   public void setDescricao(String descricao) {
@@ -68,6 +78,11 @@ public class Falha {
     if (getClass() != obj.getClass())
       return false;
     Falha other = (Falha) obj;
+    if (matriculaImovel == null) {
+      if (other.matriculaImovel != null)
+        return false;
+    } else if (!matriculaImovel.equals(other.matriculaImovel))
+      return false;
     if (descricao == null) {
       if (other.descricao != null)
         return false;
@@ -93,8 +108,8 @@ public class Falha {
 
   @Override
   public String toString() {
-    return "Falha [descricao=" + descricao + ", previsaoConclusao=" + previsaoConclusao + ", dataInicio=" + dataInicio
-        + ", dataFim=" + dataFim + "]";
+    return "Falha [matriculaImovel=" + matriculaImovel + ", descricao=" + descricao + ", previsaoConclusao="
+        + previsaoConclusao + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + "]";
   }
 
 }
