@@ -4,14 +4,13 @@ public class Imovel {
 
   private String matricula;
   private String endereco;
-  private int UltimaLeitura;
+  private int ultimaLeitura;
   private int penultimaLeitura;
 
-  public Imovel(String matricula, String endereco, int ultimaLeitura, int penultimaLeitura) {
+  public Imovel(String matricula, String endereco, int ultimaLeitura) {
     this.matricula = matricula;
     this.endereco = endereco;
-    UltimaLeitura = ultimaLeitura;
-    this.penultimaLeitura = penultimaLeitura;
+    this.ultimaLeitura = ultimaLeitura;
   }
 
   public String getMatricula() {
@@ -23,7 +22,7 @@ public class Imovel {
   }
 
   public int getUltimaLeitura() {
-    return this.UltimaLeitura;
+    return this.ultimaLeitura;
   }
 
   public int getPenultimaLeitura() {
@@ -38,8 +37,9 @@ public class Imovel {
     this.endereco = endereco;
   }
 
-  public void setUltimaLeitura(int ultimaLeitura) {
-    UltimaLeitura = ultimaLeitura;
+  public void setUltimaLeitura(int novaLeitura) {
+    this.penultimaLeitura = this.ultimaLeitura;
+    this.ultimaLeitura = novaLeitura;
   }
 
   public void setPenultimaLeitura(int penultimaLeitura) {
@@ -52,7 +52,7 @@ public class Imovel {
     int result = 1;
     result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
     result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
-    result = prime * result + UltimaLeitura;
+    result = prime * result + ultimaLeitura;
     result = prime * result + penultimaLeitura;
     return result;
   }
@@ -76,7 +76,7 @@ public class Imovel {
         return false;
     } else if (!endereco.equals(other.endereco))
       return false;
-    if (UltimaLeitura != other.UltimaLeitura)
+    if (ultimaLeitura != other.ultimaLeitura)
       return false;
     if (penultimaLeitura != other.penultimaLeitura)
       return false;
@@ -87,6 +87,6 @@ public class Imovel {
   public String toString() {
 
     return "\n\tMatricula: " + matricula + "\n\tEndereco: " + endereco + "\n\tPenultimaLeitura: "
-        + penultimaLeitura + "\n\tUltimaLeitura: " + UltimaLeitura;
+        + penultimaLeitura + "\n\tUltimaLeitura: " + ultimaLeitura;
   }
 }
