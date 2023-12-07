@@ -26,21 +26,9 @@ public class ImovelService implements ImovelRepository {
     System.out.print("\n\tEndereço do Imóvel: ");
     String endereco = Utils.scan.nextLine();
 
-    int penultimaLeitura = obterInteiroValido("\n\tLeitura anterior (em kWh): ");
-    int ultimaLeitura;
+    int ultimaLeitura = obterInteiroValido("\n\tLeitura atual (em kWh): ");
 
-    do {
-      ultimaLeitura = obterInteiroValido("\n\tLeitura atual (em kWh): ");
-
-      if (ultimaLeitura < penultimaLeitura) {
-        Utils.limparTela();
-        System.out.println("\n\tA leitura atual deve ser maior que a leitura anterior.");
-        Utils.pausar(Utils.scan);
-      }
-
-    } while (ultimaLeitura < penultimaLeitura);
-
-    imoveis.add(new Imovel(matricula, endereco, ultimaLeitura, penultimaLeitura));
+    imoveis.add(new Imovel(matricula, endereco, ultimaLeitura));
 
     Utils.limparTela();
     System.out.println("\n\tImóvel cadastrado com sucesso!");
