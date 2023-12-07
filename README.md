@@ -7,7 +7,7 @@
 
 ## Autores:
  - Albert Silva
- - Gabriel Souza
+ - Gabriel Sousa
  - Jhonata Araujo  
  - Laio Rodrigues
  - Ticiana Hoog  
