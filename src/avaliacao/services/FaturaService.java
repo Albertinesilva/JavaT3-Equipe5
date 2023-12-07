@@ -1,34 +1,42 @@
 package avaliacao.services;
 import java.util.*;
-import javax.rmi.CORBA.Util;
 import avaliacao.utils.*;
 import avaliacao.entities.*;
 
 public class FaturaService {
-    private static List<Fatura> listaFatura;
+    private static List<Fatura> listaFatura = new ArrayList<>();
 
     public static void registrarConsumo() {
-		Imovel imovel = ImovelService.buscarImovel();
+		Imovel imovel = ImovelService.buscaImovel();
 
 		if(imovel == null) {
 			Utils.cxMsg("Imóvel não encontrado!");
 			return;
 		}
 
-    	int valorLido;
-		try {
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);
-			
-			System.out.print("Informe a leitura realizada: ");
-			valorLido = scanner.nextInt();
-			imovel.setUltimaLeitura(valorLido);
-			novaFatura(imovel);
-			Utils.cxMsg("O consumo foi registrado e a fatura foi gerada!");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (true) {
+			int valorLido;
+			try {
+				@SuppressWarnings("resource")
+				Scanner scanner = new Scanner(System.in);
+				
+				Utils.limparTela();
+				System.out.print("Informe a leitura realizada: ");
+				valorLido = scanner.nextInt();
+				if(imovel.getUltimaLeitura() > valorLido){
+					Utils.cxMsg("A leitura atual não pode ser menor que a leitura antiga!");
+					continue;
+				}
+				imovel.setUltimaLeitura(valorLido);
+				novaFatura(imovel);
+				Utils.cxMsg("O consumo foi registrado e a fatura foi gerada!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
 		}
+
+    	
     }
     
     public static void novaFatura(Imovel imovel) {    	
@@ -57,13 +65,42 @@ public class FaturaService {
         	if(!f.isQuitado())
         		System.out.println(f.toString());
 		}
-        Scanner scanner = new Scanner(System.in);
-        Utils.pausar(scanner);
+        Utils.pausar(Utils.scan);
     }
 
-    public static Fatura obterFaturaPorMesEmissao(String matricula, int mesEmissao) {
-        for (Fatura fatura : listaFatura) {
-            if (fatura.getMatriculaImovel().equalsIgnoreCase(matricula) && fatura.getDataEmissao().getMonthValue() == mesEmissao) {
+    public static Fatura obterFaturaPorMesEmissao() {
+        Imovel imovel = ImovelService.buscaImovel();
+    	
+		if(imovel == null) {
+			Utils.cxMsg("Imóvel não encontrado!");
+			return null;
+		}
+    	
+    	int valorLido = 0;
+    	int k = 0;
+		while (valorLido > 12 || valorLido < 1) {
+			try {
+				@SuppressWarnings("resource")
+				Scanner scanner = new Scanner(System.in);
+
+				Utils.limparTela();
+				System.out.print("Informe o mês referente à fatura: ");
+				valorLido = scanner.nextInt();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			if (valorLido > 12 || valorLido < 1) {
+				Utils.cxMsg("O mês informado é inválido!");
+				k++;
+			}
+			if(k == 3) {
+				Utils.cxMsg("Limite de tentativas excedidas! Tente novamente!");
+			}
+		}
+		
+		for (Fatura fatura : listaFatura) {
+            if (fatura.getMatriculaImovel().equalsIgnoreCase(imovel.getMatricula()) && fatura.getDataEmissao().getMonthValue() == valorLido) {
                 return fatura;
             }
         }
@@ -71,6 +108,7 @@ public class FaturaService {
     }
     
     public static void todosOsPagamentos() {
+		Utils.limparTela();
     	System.out.println("=============== TODOS OS PAGAMENTOS ===============");
     	System.out.println("");
     	for (Fatura f : listaFatura) {
@@ -86,37 +124,7 @@ public class FaturaService {
     }
 
     public static void pagamentosPorFatura() {
-    	Imovel imovel = ImovelService.buscarImovel();
-    	
-		if(imovel == null) {
-			Utils.cxMsg("Imóvel não encontrado!");
-			return;
-		}
-    	
-    	int valorLido = 0;
-    	int k = 0;
-		while (valorLido > 12 || valorLido < 1) {
-			try {
-				@SuppressWarnings("resource")
-				Scanner scanner = new Scanner(System.in);
-
-				System.out.print("Informe o mês referente à fatura: ");
-				valorLido = scanner.nextInt();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return;
-			}
-			if (valorLido > 12 || valorLido < 1) {
-				Utils.cxMsg("O mês informado é inválido!");
-				k++;
-			}
-			if(k == 3) {
-				Utils.cxMsg("Limite de tentativas excedidas! Tente novamente!");
-			}
-		}
-		
-		Fatura encontrada = obterFaturaPorMesEmissao(imovel.getMatricula(), valorLido);
+		Fatura encontrada = obterFaturaPorMesEmissao();
 		
 		if(encontrada == null) {
 			Utils.cxMsg("Não foi encontrado nenhuma fatura com as descrições informadas!");
@@ -134,6 +142,7 @@ public class FaturaService {
     }
 
     public static void todosOsReembolsos() {
+		Utils.limparTela();
     	System.out.println("=============== TODOS OS REEMBOLSOS ===============");
     	System.out.println("");
     	for (Fatura f : listaFatura) {
@@ -147,37 +156,7 @@ public class FaturaService {
     }
     
     public static void reembolsosPorFatura() {
-    	Imovel imovel = ImovelService.buscarImovel();
-    	
-    	if(imovel == null) {
-    		Utils.cxMsg("Imóvel não encontrado!");
-    		return;
-    	}
-    	
-    	int valorLido = 0;
-    	int k = 0;
-		while (valorLido > 12 || valorLido < 1) {
-			try {
-				@SuppressWarnings("resource")
-				Scanner scanner = new Scanner(System.in);
-
-				System.out.print("Informe o mês referente à fatura: ");
-				valorLido = scanner.nextInt();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return;
-			}
-			if (valorLido > 12 || valorLido < 1) {
-				Utils.cxMsg("O mês informado é inválido!");
-				k++;
-			}
-			if(k == 3) {
-				Utils.cxMsg("Limite de tentativas excedidas! Tente novamente!");
-			}
-		}
-		
-		Fatura encontrada = obterFaturaPorMesEmissao(imovel.getMatricula(), valorLido);
+		Fatura encontrada = obterFaturaPorMesEmissao();
 		
 		if(encontrada == null) {
 			Utils.cxMsg("Não foi encontrado nenhuma fatura com as descrições informadas!");

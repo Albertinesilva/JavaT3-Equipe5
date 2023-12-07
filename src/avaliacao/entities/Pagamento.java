@@ -42,7 +42,6 @@ public class Pagamento {
 			pagamento = new Pagamento(valorPagamento);
 			return pagamento;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

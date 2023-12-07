@@ -7,8 +7,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import avaliacao.services.ClienteService;
-import avaliacao.services.ImovelService;
+import avaliacao.entities.Fatura;
+import avaliacao.services.*;
 
 public class Utils {
 
@@ -31,10 +31,10 @@ public class Utils {
           menuImoveis();
           break;
         case 3:
-          // menuContas();
+          menuFaturas();
           break;
         case 4:
-          // menuPagamentos();
+          menuPagamentos();
           break;
         case 5:
           // menuRelatorios();
@@ -86,6 +86,7 @@ public class Utils {
 
     return opcao;
   }
+
 
   private static int dispMenuClientes() {
 
@@ -165,6 +166,7 @@ public class Utils {
     } while (opcao != 0);
   }
 
+
   public static int dispMenuImoveis() {
 
     int opcao = -1;
@@ -243,6 +245,159 @@ public class Utils {
     } while (opcao != 0);
   }
 
+
+  private static int dispMenuFaturas() {
+
+    int opcao = -1;
+
+    do {
+      limparTela();
+      imprimirFormatado(LocalDateTime.now());
+      calcularDiasRestantes(LocalDateTime.now());
+      System.out.print("\n\t===== GESTÃO CLIENTE =====");
+      System.out.print("\n\t[1] - REGISTRO DE CONSUMO");
+      System.out.print("\n\t[2] - LISTAR FATURAS EM ABERTO");
+      System.out.print("\n\t[3] - LISTAR TODAS AS FATURAS");
+      System.out.print("\n\t[4] - MENU PRINCIPAL");
+      System.out.print("\n\t[0] - SAIR");
+      System.out.print("\n\tENTRADA -> ");
+
+      try {
+        opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao < 0 || opcao > 4) {
+          System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 6.");
+          pausar(scan);
+          limparTela();
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("\n\tOps, entrada inválida. Digite um número inteiro.");
+        scan.next(); // Limpa o buffer do scanner
+        pausar(scan);
+        limparTela();
+      }
+
+    } while (opcao < 0 || opcao > 4);
+
+    return opcao;
+  }
+
+  public static void menuFaturas() {
+
+    int opcao = -1;
+
+    do {
+
+      opcao = dispMenuFaturas();
+
+      switch (opcao) {
+        case 1:
+          FaturaService.registrarConsumo();
+          break;
+        case 2:
+          FaturaService.faturasEmAberto();
+          break;
+        case 3:
+          FaturaService.todasAsFaturas();
+          break;
+        case 4:
+          System.out.println("\n\tRetornando ao menu principal...");
+          pausar(scan);
+          MainEnergiaCoelho();
+          break;
+        case 0:
+          System.err.println("\n\tObrigado por utilizar o Energia Coelho, Saindo!...");
+          System.exit(0);
+          break;
+        default:
+          System.out.println("\n\tOpção inválida. Tente novamente.");
+      }
+    } while (opcao != 0);
+  }
+
+
+  private static int dispMenuPagamentos() {
+
+    int opcao = -1;
+
+    do {
+      limparTela();
+      imprimirFormatado(LocalDateTime.now());
+      calcularDiasRestantes(LocalDateTime.now());
+      System.out.print("\n\t===== GESTÃO CLIENTE =====");
+      System.out.print("\n\t[1] - INCLUIR PAGAMENTO");
+      System.out.print("\n\t[2] - EXIBIR TODOS OS PAGAMENTOS");
+      System.out.print("\n\t[3] - EXIBIR PAGAMENTOS POR FATURA");
+      System.out.print("\n\t[4] - EXIBIR TODOS OS REEMBOLSOS");
+      System.out.print("\n\t[5] - EXIBIR REEMBOLSOS POR FATURA");
+      System.out.print("\n\t[6] - MENU PRINCIPAL");
+      System.out.print("\n\t[0] - SAIR");
+      System.out.print("\n\tENTRADA -> ");
+
+      try {
+        opcao = scan.nextInt();
+        scan.nextLine();
+
+        if (opcao < 0 || opcao > 6) {
+          System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 6.");
+          pausar(scan);
+          limparTela();
+        }
+      } catch (InputMismatchException e) {
+        System.out.println("\n\tOps, entrada inválida. Digite um número inteiro.");
+        scan.next(); // Limpa o buffer do scanner
+        pausar(scan);
+        limparTela();
+      }
+
+    } while (opcao < 0 || opcao > 6);
+
+    return opcao;
+  }
+
+  public static void menuPagamentos() {
+
+    int opcao = -1;
+
+    do {
+
+      opcao = dispMenuPagamentos();
+
+      switch (opcao) {
+        case 1:
+          Fatura fatura = FaturaService.obterFaturaPorMesEmissao();
+          if(fatura != null)
+            fatura.novoPagamento();
+          break;
+        case 2:
+          FaturaService.todosOsPagamentos();
+          break;
+        case 3:
+          FaturaService.pagamentosPorFatura();
+          break;
+        case 4:
+          FaturaService.todosOsReembolsos();
+          break;
+        case 5:
+          FaturaService.reembolsosPorFatura();
+          break;
+        case 6:
+          System.out.println("\n\tRetornando ao menu principal...");
+          pausar(scan);
+          MainEnergiaCoelho();
+          break;
+        case 0:
+          System.err.println("\n\tObrigado por utilizar o Energia Coelho, Saindo!...");
+          System.exit(0);
+          break;
+        default:
+          System.out.println("\n\tOpção inválida. Tente novamente.");
+      }
+    } while (opcao != 0);
+  }
+
+
   public static void imprimirFormatado(LocalDateTime dataHora) {
     System.out.println("\n\tHoje é " + dataHora.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm:ss")));
   }
@@ -281,7 +436,6 @@ public class Utils {
   public static void cxMsg(String mensagem) {
 		limparTela();
     System.out.println(mensagem);
-    Scanner scanner = new Scanner(System.in);
-    pausar(scanner);
+    pausar(Utils.scan);
   }
 }

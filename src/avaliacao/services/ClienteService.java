@@ -108,13 +108,11 @@ public class ClienteService implements ClienteRepository {
             Utils.scan.nextLine();
           }
         }
-      } else {
-        System.out.println("\n\tOps, Cliente não encontrado!..");
-        Utils.pausar(Utils.scan);
-        return;
-
       }
     }
+    System.out.println("\n\tOps, Cliente não encontrado!..");
+    Utils.pausar(Utils.scan);
+    return;
   }
 
   public static void excluir() 
