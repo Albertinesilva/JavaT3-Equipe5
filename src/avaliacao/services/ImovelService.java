@@ -1,7 +1,5 @@
 package avaliacao.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -19,7 +17,6 @@ public class ImovelService implements ImovelRepository {
   }
 
   public static void cadastrar() {
-
     Utils.limparTela();
     System.out.println("\n\t===== CADASTRO DE IMÓVEL =====");
 
@@ -29,21 +26,9 @@ public class ImovelService implements ImovelRepository {
     System.out.print("\n\tEndereço do Imóvel: ");
     String endereco = Utils.scan.nextLine();
 
-    LocalDate penultimaLeitura = obterDataValida("\n\tData da penúltima leitura (dd/MM/yyyy): ");
-    LocalDate ultimaLeitura;
+    int ultimaLeitura = obterInteiroValido("\n\tLeitura atual (em kWh): ");
 
-    do {
-      ultimaLeitura = obterDataValida("\n\tData da última leitura (dd/MM/yyyy): ");
-
-      if (ultimaLeitura.isBefore(penultimaLeitura)) {
-        Utils.limparTela();
-        System.out.println("\n\tA data da última leitura deve ser posterior à data da penúltima leitura.");
-        Utils.pausar(Utils.scan);
-      }
-
-    } while (ultimaLeitura.isBefore(penultimaLeitura));
-
-    imoveis.add(new Imovel(matricula, endereco, ultimaLeitura, penultimaLeitura));
+    imoveis.add(new Imovel(matricula, endereco, ultimaLeitura));
 
     Utils.limparTela();
     System.out.println("\n\tImóvel cadastrado com sucesso!");
@@ -68,6 +53,7 @@ public class ImovelService implements ImovelRepository {
   }
 
   public static void editar() {
+
     Utils.limparTela();
     System.out.println("\n\t===== EDIÇÃO DE IMOVEL =====");
 
@@ -80,6 +66,7 @@ public class ImovelService implements ImovelRepository {
           Utils.limparTela();
           System.out.print("\n\t===== DADOS DO IMOVEL =====");
           System.out.println(imovel.toString());
+          System.out.println("\t===========================");
 
           while (true) {
             try {
@@ -95,9 +82,9 @@ public class ImovelService implements ImovelRepository {
                 System.out.print("\n\tDigite o novo endereço do imóvel: ");
                 String endereco = Utils.scan.nextLine();
 
-                LocalDate penultimaLeitura = obterDataValida(
-                    "\n\tDigite a nova data da penúltima leitura (dd/MM/yyyy): ");
-                LocalDate ultimaLeitura = obterDataValida("\n\tDigite a nova data da última leitura (dd/MM/yyyy): ");
+                int penultimaLeitura = obterInteiroValido(
+                    "\n\tDigite a nova leitura da penúltima leitura (em kWh): ");
+                int ultimaLeitura = obterInteiroValido("\n\tDigite a nova leitura da última leitura (em kWh): ");
 
                 imovel.setEndereco(endereco);
                 imovel.setUltimaLeitura(ultimaLeitura);
@@ -142,7 +129,7 @@ public class ImovelService implements ImovelRepository {
       System.out.print("\n\tDigite a matrícula do imóvel: ");
       String matricula = Utils.scan.nextLine();
 
-      boolean imovelEncontrado = false;
+      // boolean imovelEncontrado = false;
 
       for (Imovel imovel : imoveis) {
         if (imovel.getMatricula().equals(matricula)) {
@@ -193,23 +180,20 @@ public class ImovelService implements ImovelRepository {
   public static void pesquisar() {
 
     Utils.limparTela();
-    System.out.print("\n\t===== PESQUISA DE IMÓVEL =====");
+    System.out.print("\n\t===== PESQUISA DE IMÓVEL =====\n");
 
     if (imoveis.size() > 0) {
-
       System.out.print("\n\tDigite a matrícula do imóvel: ");
       String matricula = Utils.scan.nextLine();
 
       boolean imovelEncontrado = false;
 
       for (Imovel imovel : imoveis) {
-
         if (imovel.getMatricula().equals(matricula)) {
-
           Utils.limparTela();
           System.out.print("\n\t===== DADOS DO IMOVEL =====");
           System.out.println(imovel.toString());
-          Utils.pausar(Utils.scan);
+          System.out.println("\t===========================");
           imovelEncontrado = true;
           break;
         }
@@ -227,24 +211,83 @@ public class ImovelService implements ImovelRepository {
     Utils.pausar(Utils.scan);
   }
 
-  private static LocalDate obterDataValida(String prompt) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    LocalDate data = null;
-    boolean dataValida = false;
+  private static int obterInteiroValido(String prompt) {
+
+    int valor = 0;
+    boolean valorValido = false;
 
     do {
       try {
         System.out.print(prompt);
-        String dataStr = Utils.scan.nextLine();
-        data = LocalDate.parse(dataStr, formatter);
-        dataValida = true; // Se chegou aqui, a data é válida
-      } catch (Exception e) {
+        valor = Integer.parseInt(Utils.scan.nextLine());
+        valorValido = true; // Se chegou aqui, o valor é válido
+
+      } catch (NumberFormatException e) {
         Utils.limparTela();
-        System.out.println("\n\tFormato de data inválido. Por favor, digite novamente no formato dd/MM/yyyy.");
+        System.out.println("\n\tPor favor, digite um valor inteiro válido.");
         Utils.pausar(Utils.scan);
       }
-    } while (!dataValida);
+    } while (!valorValido);
 
-    return data;
+    return valor;
   }
+
+  public static Imovel buscaImovel() {
+
+    Utils.limparTela();
+    System.out.print("\n\t===== PESQUISA DE IMÓVEL POR MATRÍCULA =====");
+
+    if (imoveis.size() > 0) {
+
+      while (true) {
+
+        System.out.print("\n\tDigite a matrícula do imóvel: ");
+        String matricula = Utils.scan.nextLine();
+        Utils.limparTela();
+
+        boolean imovelEncontrado = false;
+
+        for (Imovel imovel : imoveis) {
+
+          if (imovel.getMatricula().equals(matricula)) {
+            Utils.limparTela();
+            System.out.print("\n\t===== DADOS DO IMOVEL =====");
+            System.out.println(imovel.toString());
+            System.out.println("\t===========================");
+
+            // Pergunta se é o Imovel correto
+            while (true) {
+              System.out.print("\n\tEsse é o Imovel correto? (S/N): ");
+              String resposta = Utils.scan.nextLine();
+
+              if (resposta.equalsIgnoreCase("S")) {
+                Utils.pausar(Utils.scan);
+                return imovel;
+              } else
+
+              if (resposta.equalsIgnoreCase("N")) {
+                imovelEncontrado = true;
+                break; // Retorna ao loop anterior para pedir uma nova matrícula
+
+              } else {
+                Utils.limparTela();
+                System.out.println("\n\tOpção inválida. Digite 'S' para confirmar ou 'N' para cancelar.");
+              }
+            }
+          }
+        }
+        if (!imovelEncontrado) {
+          Utils.limparTela();
+          System.out.println("\n\tImóvel não encontrado!");
+        }
+      }
+    } else {
+      Utils.limparTela();
+      System.out.println("\n\tNão há imóveis cadastrados!");
+    }
+
+    Utils.pausar(Utils.scan);
+    return null; // Se não encontrou, retorna null
+  }
+
 }
