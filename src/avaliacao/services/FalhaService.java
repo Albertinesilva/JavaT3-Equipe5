@@ -33,6 +33,7 @@ public class FalhaService implements FalhaRepository {
                 Utils.cxMsg("Imóvel não encontrado!");
                 return;
             }
+            matriculaImovel = imovel.getMatricula();
         } 
         
         System.out.print("\n\tDigite a descrição da falha: ");
@@ -59,14 +60,14 @@ public class FalhaService implements FalhaRepository {
         String matriculaImovel = null;
         if (resposta.equalsIgnoreCase("S")) {
             System.out.print("\n\tDigite a matrícula do imóvel: ");
-            matriculaImovel = Utils.scan.nextLine();
-
             Imovel imovel = ImovelService.buscaImovel();
 
             if (imovel == null) {
                 Utils.cxMsg("Imóvel não encontrado!");
                 return;
             }
+
+            matriculaImovel = imovel.getMatricula();
         } 
 
         System.out.print("\n\tDigite a descrição da falha: ");
@@ -141,6 +142,25 @@ public class FalhaService implements FalhaRepository {
         System.out.println("\n\t===== FALHA NÃO ENCONTRADA =====");
         Utils.pausar(Utils.scan);     
    
+    }
+
+    public static FalhaDistribuicao buscarFalhaDistribuicao(){
+        Utils.limparTela();
+        System.out.println("\n\t===== BUSCAR FALHA DE DISTRIBUIÇÃO =====");
+        System.out.print("\n\tDigite o ID da falha que deseja buscar: ");
+        int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
+        for (FalhaDistribuicao falhaDist : falhasDist) {
+            if (falhaDist.getId() == id) {
+                System.out.println("\n\t===== FALHA ENCONTRADA =====");
+                System.out.println(falhaDist.toString());
+                Utils.pausar(Utils.scan);
+                return falhaDist;
+            }
+        }
+        System.out.println("\n\t===== FALHA NÃO ENCONTRADA =====");
+        Utils.pausar(Utils.scan);
+        return null;
     }
 
 

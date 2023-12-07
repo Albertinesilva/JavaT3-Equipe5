@@ -1,5 +1,7 @@
 package avaliacao.repositories;
 
+import avaliacao.entities.FalhaDistribuicao;
+
 public interface FalhaRepository{
 
   public static void cadastrar(){}
@@ -8,5 +10,7 @@ public interface FalhaRepository{
 
   public static void editar(){}
 
-
+  public static FalhaDistribuicao buscarFalhaDistribuicao(){
+    return null;
+  }
 }
