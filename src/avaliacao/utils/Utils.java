@@ -406,8 +406,10 @@ public class Utils {
       calcularDiasRestantes(LocalDateTime.now());
       System.out.print("\n\t===== GESTÃO FALHAS =====");
       System.out.print("\n\t[1] - CADASTRAR");
-      System.out.print("\n\t[2] - GESTÃO REPAROS");
-      System.out.print("\n\t[3] - MENU PRINCIPAL");
+      System.out.print("\n\t[2] - MOSTRAR TODAS AS FALHAS");
+      System.out.print("\n\t[3] - FINALIZAR FALHA");
+      System.out.print("\n\t[4] - GESTÃO REPAROS");
+      System.out.print("\n\t[5] - MENU PRINCIPAL");
       System.out.print("\n\t[0] - SAIR");
       System.out.print("\n\tENTRADA -> ");
 
@@ -415,7 +417,7 @@ public class Utils {
         opcao = scan.nextInt();
         scan.nextLine();
 
-        if (opcao < 0 || opcao > 3) {
+        if (opcao < 0 || opcao > 5) {
           System.out.println("\n\tOps, opção inválida. Digite um número entre 0 e 3.");
           pausar(scan);
           limparTela();
@@ -427,7 +429,7 @@ public class Utils {
         limparTela();
       }
 
-    } while (opcao < 0 || opcao > 3);
+    } while (opcao < 0 || opcao > 4);
 
     return opcao;
   }
@@ -506,8 +508,19 @@ public class Utils {
             menuTipoFalhas();
           break;
         case 2:
+          FalhaService.listar();
+          break;
+        case 3:
+          FalhaService.editar();
+          break;
+        case 4:
           // menuReparos();
         break;
+        case 5:
+          System.out.println("\n\tRetornando ao menu principal...");
+          pausar(scan);
+          MainEnergiaCoelho();
+          break;
       
         default:
           break;

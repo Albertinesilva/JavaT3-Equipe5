@@ -83,4 +83,65 @@ public class FalhaService implements FalhaRepository {
 
         falhasGer.add(falhaGer);
     }
+
+    public static void listar() {
+        Utils.limparTela();
+        System.out.println("\n\t===== LISTA DE FALHAS =====");
+        System.out.println("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
+        for (FalhaDistribuicao falhaDist : falhasDist) {
+            System.out.println(falhaDist.toString());
+        }
+        System.out.println("\n\t===== FALHAS DE GERAÇÃO =====");
+        for (FalhaGeracao falhaGer : falhasGer) {
+            System.out.println(falhaGer.toString());
+        }
+        System.out.println("\n\t===== FIM DA LISTA =====");
+        Utils.pausar(Utils.scan);
+    }
+
+    public static void editar(){ 
+        Utils.limparTela();
+        System.out.println("\n\t===== EDITAR FALHA =====");
+        System.out.println("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
+        for (FalhaDistribuicao falhaDist : falhasDist) {
+            System.out.println(falhaDist.toString());
+        }
+        System.out.println("\n\t===== FALHAS DE GERAÇÃO =====");
+        for (FalhaGeracao falhaGer : falhasGer) {
+            System.out.println(falhaGer.toString());
+        }
+        System.out.println("\n\t===== FIM DA LISTA =====");
+        System.out.print("\n\tDigite o ID da falha que deseja editar: ");
+        int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
+        for (FalhaDistribuicao falhaDist : falhasDist) {
+            if (falhaDist.getId() == id) {
+                System.out.print("\n\tDigite a nova data de fim: ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataFim = LocalDate.parse(Utils.scan.nextLine(), formatter);
+                falhaDist.setDataFim(dataFim);
+                System.out.println("\n\t===== FALHA EDITADA =====");
+                System.out.println(falhaDist.toString());
+                Utils.pausar(Utils.scan);
+                return;
+            }
+        }
+        for (FalhaGeracao falhaGer : falhasGer) {
+            if (falhaGer.getId() == id) {
+                System.out.print("\n\tDigite a nova data de fim: ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataFim = LocalDate.parse(Utils.scan.nextLine(), formatter);
+                falhaGer.setDataFim(dataFim);
+                System.out.println("\n\t===== FALHA EDITADA =====");
+                System.out.println(falhaGer.toString());
+                Utils.pausar(Utils.scan);
+                return;
+            }
+        }
+        System.out.println("\n\t===== FALHA NÃO ENCONTRADA =====");
+        Utils.pausar(Utils.scan);     
+   
+    }
+
+
 }

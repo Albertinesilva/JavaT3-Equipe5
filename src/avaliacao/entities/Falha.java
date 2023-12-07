@@ -1,9 +1,12 @@
 package avaliacao.entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Falha {
 
+  private static int proximoID = 1;
+  private int id;
   private String matriculaImovel;
   private String descricao;
   private LocalDate previsaoConclusao;
@@ -11,12 +14,17 @@ public class Falha {
   private LocalDate dataFim;
 
   public Falha(String matriculaImovel, String descricao, LocalDate previsaoConclusao, LocalDate dataInicio, LocalDate dataFim) {
+    this.id = proximoID++;
     this.matriculaImovel = matriculaImovel;
     this.descricao = descricao;
     this.previsaoConclusao = previsaoConclusao;
     this.dataInicio = dataInicio;
     this.dataFim = dataFim;
   }
+
+  public int getId() {
+    return this.id;
+  }  
 
   public String getMatriculaImovel() {
     return this.matriculaImovel;
@@ -108,8 +116,25 @@ public class Falha {
 
   @Override
   public String toString() {
-    return "Falha [matriculaImovel=" + matriculaImovel + ", descricao=" + descricao + ", previsaoConclusao="
-        + previsaoConclusao + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + "]";
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("Falha [");
+    sb.append("id=").append(id).append(", ");
+
+    if (matriculaImovel != null) {
+        sb.append("matriculaImovel=").append(matriculaImovel).append(", ");
+    } else {
+        sb.append("matriculaImovel=não fornecida, ");
+    }
+
+    sb.append("descricao=").append(descricao)
+      .append(", previsaoConclusao=").append(previsaoConclusao != null ? previsaoConclusao.format(dateFormatter) : "não especificada")
+      .append(", dataInicio=").append(dataInicio.format(dateFormatter))
+      .append(", dataFim=").append(dataFim != null ? dataFim.format(dateFormatter) : "ainda aberta")
+      .append("]");
+
+    return sb.toString();
   }
 
 }
