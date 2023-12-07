@@ -119,20 +119,19 @@ public class Falha {
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     StringBuilder sb = new StringBuilder();
-    sb.append("Falha [");
-    sb.append("id=").append(id).append(", ");
+    // sb.append("Falha [");
+    sb.append("\n\tId=").append(id);
 
     if (matriculaImovel != null) {
-        sb.append("matriculaImovel=").append(matriculaImovel).append(", ");
+        sb.append("\n\tMatricula do Imovel:").append(matriculaImovel);
     } else {
-        sb.append("matriculaImovel=não fornecida, ");
+        sb.append("\n\tMatriculaImovel: não fornecida ");
     }
 
-    sb.append("descricao=").append(descricao)
-      .append(", previsaoConclusao=").append(previsaoConclusao != null ? previsaoConclusao.format(dateFormatter) : "não especificada")
-      .append(", dataInicio=").append(dataInicio.format(dateFormatter))
-      .append(", dataFim=").append(dataFim != null ? dataFim.format(dateFormatter) : "ainda aberta")
-      .append("]");
+    sb.append("\n\tDescricao: ").append(descricao)
+      .append("\n\tPrevisao de Conclusao: ").append(previsaoConclusao != null ? previsaoConclusao.format(dateFormatter) : "não especificada")
+      .append("\n\tData Inicio: ").append(dataInicio.format(dateFormatter))
+      .append("\n\tData Fim: ").append(dataFim != null ? dataFim.format(dateFormatter) : "ainda aberta");
 
     return sb.toString();
   }

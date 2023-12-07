@@ -429,7 +429,7 @@ public class Utils {
         limparTela();
       }
 
-    } while (opcao < 0 || opcao > 4);
+    } while (opcao < 0 || opcao > 5);
 
     return opcao;
   }
@@ -579,7 +579,10 @@ public class Utils {
           pausar(scan);
           MainEnergiaCoelho();
           break;
-      
+        case 0:
+          System.err.println("\n\tObrigado por utilizar o Energia Coelho, Saindo!...");
+          System.exit(0);
+          break;      
         default:
           break;
       }

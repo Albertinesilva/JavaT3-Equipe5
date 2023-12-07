@@ -24,6 +24,7 @@ public class ReparoService implements ReparoRepository {
             i++;
             System.out.println(i + " - " + reparo.toString());
         }
+        Utils.pausar(Utils.scan);
     }
     public static void listarReparos(){
         int i = 0;
@@ -33,6 +34,7 @@ public class ReparoService implements ReparoRepository {
             i++;
             System.out.println(i + " - " + reparo.toString());
         }
+        Utils.pausar(Utils.scan);
     }
 
     public static void encerraReparo(){
@@ -58,7 +60,7 @@ public class ReparoService implements ReparoRepository {
         reparo.setConcluido(true);
         reparo.setDataFim(LocalDate.now());
 
-        System.out.println("O reparo realizado resolveu a falha? (sim - 1/ nao - 0)");
+        System.out.println("\n\tO reparo realizado resolveu a falha? (sim - 1/ nao - 0)");
         int resposta = Utils.scan.nextInt();
         if (resposta == 1)
             return;
@@ -66,6 +68,7 @@ public class ReparoService implements ReparoRepository {
             Utils.limparTela();
             System.out.println("\n\tCRIANDO REPARO AUXILIAR");
             System.out.println("Digite a descrição do reparo auxiliar");
+            Utils.scan.nextLine();
             String descricao = Utils.scan.nextLine();
             System.out.print("\n\tDigite a previsão de conclusão: ");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -73,6 +76,7 @@ public class ReparoService implements ReparoRepository {
             reparo.setReparoAuxiliar(new Reparo(descricao, previsaoConclusao, LocalDate.now(), reparo.getFalha())); 
             listaReparos.add(reparo.getReparoAuxiliar());         
         }
+        Utils.pausar(Utils.scan);
     }
 
     public static void cadastrarReparo(Falha falha){
@@ -88,5 +92,6 @@ public class ReparoService implements ReparoRepository {
         
         Reparo novoReparo = new Reparo(descricao, previsaoConclusao, LocalDate.now(), falha);
         listaReparos.add(novoReparo);
+        Utils.pausar(Utils.scan);
     }
 }

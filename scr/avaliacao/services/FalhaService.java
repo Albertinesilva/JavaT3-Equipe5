@@ -89,26 +89,26 @@ public class FalhaService implements FalhaRepository {
     public static void listar() {
         Utils.limparTela();
         System.out.println("\n\t===== LISTA DE FALHAS =====");
-        System.out.println("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
+        System.out.print("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
         for (FalhaDistribuicao falhaDist : falhasDist) {
             System.out.println(falhaDist.toString());
         }
-        System.out.println("\n\t===== FALHAS DE GERAÇÃO =====");
+        System.out.print("\n\t===== FALHAS DE GERAÇÃO =====");
         for (FalhaGeracao falhaGer : falhasGer) {
             System.out.println(falhaGer.toString());
         }
-        System.out.println("\n\t===== FIM DA LISTA =====");
+        System.out.println("\t===== FIM DA LISTA =====");
         Utils.pausar(Utils.scan);
     }
 
     public static void editar(){ 
         Utils.limparTela();
         System.out.println("\n\t===== EDITAR FALHA =====");
-        System.out.println("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
+        System.out.print("\n\t===== FALHAS DE DISTRIBUIÇÃO =====");
         for (FalhaDistribuicao falhaDist : falhasDist) {
             System.out.println(falhaDist.toString());
         }
-        System.out.println("\n\t===== FALHAS DE GERAÇÃO =====");
+        System.out.print("\n\t===== FALHAS DE GERAÇÃO =====");
         for (FalhaGeracao falhaGer : falhasGer) {
             System.out.println(falhaGer.toString());
         }
